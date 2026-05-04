@@ -51,7 +51,7 @@ export default async function NoteDetails({ params }: NoteDetailsProps) {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <NoteDetailsClient noteId={id} /> {/* ← ПЕРЕДАЄМО ТІЛЬКИ ID */}
+      <NoteDetailsClient noteId={id} />
     </HydrationBoundary>
   );
 }

@@ -1,19 +1,18 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query"; // ← ДОДАНО
+import { useQuery } from "@tanstack/react-query";
 import Modal from "@/components/Modal/Modal";
-import { fetchNoteById } from "@/lib/api"; // ← ДОДАНО
+import { fetchNoteById } from "@/lib/api";
 import css from "./NoteDetails.module.css";
 
 interface NotePreviewClientProps {
-  noteId: string; // ← ЗМІНЕНО з note на noteId
+  noteId: string;
 }
 
 export default function NoteDetailsClient({ noteId }: NotePreviewClientProps) {
   const router = useRouter();
 
-  // ← ДОДАНО useQuery
   const {
     data: note,
     isLoading,

@@ -3,11 +3,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import { fetchNotes } from "@/lib/api";
+import Link from "next/link";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import NoteList from "@/components/NoteList/NoteList";
 import Pagination from "@/components/Pagination/Pagination";
-import Modal from "@/components/Modal/Modal";
-import NoteForm from "@/components/NoteForm/NoteForm";
 import css from "./NotesPage.module.css";
 
 interface NotesClientProps {
@@ -19,7 +18,6 @@ export default function NotesClient({ initialTag }: NotesClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -66,14 +64,6 @@ export default function NotesClient({ initialTag }: NotesClientProps) {
     setCurrentPage(selectedItem.selected + 1);
   };
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
   if (error) {
     return <p>Error loading notes. Please try again.</p>;
   }
@@ -84,9 +74,9 @@ export default function NotesClient({ initialTag }: NotesClientProps) {
         <h1 style={{ margin: 0 }}>
           {currentTag !== "all" ? `${currentTag} Notes` : "All Notes"}
         </h1>
-        <button onClick={handleOpenModal} className={css.button}>
+        <Link href="/notes/action/create" className={css.button}>
           Create Note +
-        </button>
+        </Link>
       </div>
 
       <SearchBox value={searchQuery} onSearch={handleSearch} />
@@ -106,12 +96,6 @@ export default function NotesClient({ initialTag }: NotesClientProps) {
           )}
           <NoteList notes={notes} />
         </>
-      )}
-
-      {isModalOpen && (
-        <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-          <NoteForm onCancel={handleCloseModal} />
-        </Modal>
       )}
     </div>
   );
